@@ -12,6 +12,9 @@ import javax.swing.JOptionPane;
 public class ProdutoWin extends javax.swing.JDialog {
     
     ProdutoControl ctr = ProdutoControl.getInstance();
+    int selected;
+    int save_opt = 0;
+    int id;
     String nome;
     int estoque;
     Float preco;
@@ -169,9 +172,25 @@ public class ProdutoWin extends javax.swing.JDialog {
 
     private void btn_produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_produtosActionPerformed
         
-        ProdutoListWin win = new ProdutoListWin(null, true);
-        win.setLocationRelativeTo(null);
-        win.setVisible(true);
+        try {
+            ProdutoListWin win = new ProdutoListWin(null, true, true);
+            win.setLocationRelativeTo(null);
+            win.setVisible(true);
+
+            // Pega o objeto selecionado
+            this.selected = win.getSelected();
+            
+            if(this.selected > 0) {
+                // Altera a opção de salvar
+                btn_save.setText("Salvar");
+                this.save_opt = 1;
+            
+                // Carrega os dados
+                ctr.loadValuesByID(this, this.selected);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro! " + ex);
+        }
         
     }//GEN-LAST:event_btn_produtosActionPerformed
 
@@ -185,7 +204,11 @@ public class ProdutoWin extends javax.swing.JDialog {
             this.peso = Float.parseFloat( input_peso.getText().replace(",", ".") );
             this.descricao = input_desc.getText() ;
             
-            ctr.insert(nome, estoque, preco, peso, descricao);
+            if(this.save_opt == 1) {
+                ctr.update(id, nome, estoque, preco, peso, descricao);
+            } else {
+                ctr.insert(nome, estoque, preco, peso, descricao);
+            }
             this.setVisible(false);
             
         } catch (Exception ex) {
@@ -194,6 +217,38 @@ public class ProdutoWin extends javax.swing.JDialog {
         
     }//GEN-LAST:event_btn_saveActionPerformed
 
+    public void setId(int id) {
+        this.id = id;
+        input_id.setText( Integer.toString( id ));        
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+        input_nome.setText(nome);        
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+        input_estoque.setText( Integer.toString( estoque ) );
+    }
+
+    public void setPreco(Float preco) {
+        this.preco = preco;
+        input_preco.setText( preco.toString() );
+    }
+
+    public void setPeso(Float peso) {
+        this.peso = peso;
+        input_peso.setText( peso.toString() );
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+        input_desc.setText( descricao );
+    }
+
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

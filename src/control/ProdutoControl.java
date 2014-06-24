@@ -64,14 +64,19 @@ public class ProdutoControl {
      * @param id
      * @param text
      */
-    public void update(int id, String nome) throws Exception, SQLException {
+    public void update(int id, String nome, int estoque, Float preco, Float peso, String descricao) throws Exception, SQLException {
 
         this.obj = new Produto();
         this.obj.setId(id);
         this.obj.setNome(nome);
-
+        this.obj.setEstoque(estoque);
+        this.obj.setPreco(preco);
+        this.obj.setPeso(peso);
+        this.obj.setDescricao(descricao);
         dao.update(this.obj);
 
+        JOptionPane.showMessageDialog(null, "Alterações salvas!");
+        
     }
 
     /**
@@ -175,7 +180,13 @@ public class ProdutoControl {
     public void loadValuesByID(ProdutoWin win, int id) throws Exception, SQLException {
 
         Produto obj = this.get(id);
-
+        
+        win.setId( id );
+        win.setNome( obj.getNome() );
+        win.setPreco( obj.getPreco() );
+        win.setPeso( obj.getPeso() );
+        win.setEstoque( obj.getEstoque() );
+        win.setDescricao( obj.getDescricao() );
     }
 
 }

@@ -13,6 +13,7 @@ public class ProdutoListWin extends javax.swing.JDialog {
     ProdutoControl ctr = ProdutoControl.getInstance();
     int row_selected;
     int opt_select;
+    int selected;
 
     public ProdutoListWin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -21,6 +22,26 @@ public class ProdutoListWin extends javax.swing.JDialog {
         try {
             // Loading files in the table
             ctr.loadTable(table);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
+        }
+    }
+    
+    public ProdutoListWin(java.awt.Frame parent, boolean modal, boolean select) {
+        super(parent, modal);
+        initComponents();
+        
+        try {
+            // Loading files in the table
+            ctr.loadTable(table);
+            
+            // Select option
+            if(select) {
+                opt_select = 1;
+                btn_select.setEnabled(true);
+                btn_delete.setEnabled(false);
+            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
@@ -116,7 +137,11 @@ public class ProdutoListWin extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selectActionPerformed
-        // TODO add your handling code here:
+          
+        this.selected = Integer.parseInt(table.getValueAt(this.row_selected, 0).toString());
+        
+        this.setVisible(false);
+ 
     }//GEN-LAST:event_btn_selectActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
@@ -171,7 +196,11 @@ public class ProdutoListWin extends javax.swing.JDialog {
         }
         
     }
-    
+
+    public int getSelected() {
+        return selected;
+    }
+        
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
