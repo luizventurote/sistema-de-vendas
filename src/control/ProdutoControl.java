@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Produto;
@@ -16,13 +18,22 @@ import view.ProdutoWin;
  */
 public class ProdutoControl {
 
+    private static ProdutoControl instance = new ProdutoControl();
     ProdutoDao dao;
     Produto frame;
 
-    public ProdutoControl() throws Exception, SQLException {
+    private ProdutoControl() {
 
-        this.dao = new ProdutoDao();
+        try {
+            this.dao = new ProdutoDao();
+        } catch (Exception ex) {
+            Logger.getLogger(ProdutoControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+    }
+
+    public static ProdutoControl getInstance() {
+        return instance;
     }
 
     /**
@@ -40,20 +51,21 @@ public class ProdutoControl {
         dao.insert(this.frame);
 
     }
-    
+
     /**
      * Update
+     *
      * @param id
-     * @param text 
+     * @param text
      */
     public void update(int id, String nome) throws Exception, SQLException {
-        
+
         this.frame = new Produto();
         this.frame.setId(id);
         this.frame.setNome(nome);
 
         dao.update(this.frame);
-        
+
     }
 
     /**
@@ -93,9 +105,10 @@ public class ProdutoControl {
 
     /**
      * Load Table objects
+     *
      * @param table
      * @throws Exception
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void loadTable(JTable table) throws Exception, SQLException {
 
@@ -130,13 +143,14 @@ public class ProdutoControl {
         }
 
     }
-    
+
     /**
      * Get object
+     *
      * @param id
      * @return
      * @throws Exception
-     * @throws SQLException 
+     * @throws SQLException
      */
     private Produto get(int id) throws Exception, SQLException {
 
@@ -146,15 +160,14 @@ public class ProdutoControl {
 
     /**
      * Carrega dados na tabela
+     *
      * @param win
-     * @param id 
+     * @param id
      */
     public void loadValuesByID(ProdutoWin win, int id) throws Exception, SQLException {
-        
-        Produto obj = this.get(id);
-        
-    }
 
-    
+        Produto obj = this.get(id);
+
+    }
 
 }
