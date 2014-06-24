@@ -2,6 +2,7 @@ package view;
 
 import control.ProdutoControl;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -10,6 +11,8 @@ import javax.swing.JOptionPane;
 public class ProdutoListWin extends javax.swing.JDialog {
     
     ProdutoControl ctr = ProdutoControl.getInstance();
+    int row_selected;
+    int opt_select;
 
     public ProdutoListWin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -30,8 +33,8 @@ public class ProdutoListWin extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_select = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Produtos");
@@ -59,18 +62,28 @@ public class ProdutoListWin extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
-        jButton1.setText("Selecionar");
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_select.setText("Selecionar");
+        btn_select.setEnabled(false);
+        btn_select.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_selectActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Excluir");
-        jButton2.setEnabled(false);
+        btn_delete.setText("Excluir");
+        btn_delete.setEnabled(false);
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,9 +95,9 @@ public class ProdutoListWin extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btn_delete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btn_select)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -94,21 +107,71 @@ public class ProdutoListWin extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btn_select)
+                    .addComponent(btn_delete))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selectActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_selectActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        
+        try {
+            
+            int file_id = Integer.parseInt(table.getValueAt(this.row_selected, 0).toString());
+            
+            ctr.delete(file_id);
+
+            this.refresh();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
+        }
+        
+    }//GEN-LAST:event_btn_deleteActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        
+        this.row_selected = table.getSelectedRow();
+
+        if (this.row_selected >= 0) {
+
+            // Enable buttons
+            btn_delete.setEnabled(true);
+
+            if (this.opt_select == 1) {
+                btn_select.setEnabled(true);
+            }
+        }
+        
+    }//GEN-LAST:event_tableMouseClicked
+
+    public void refresh() throws Exception {
+
+        // Clean selection
+        table.clearSelection();
+
+        // Clean table
+        for (int i = table.getRowCount() - 1; i >= 0; i--) {
+            ((DefaultTableModel) table.getModel()).removeRow(i);
+        }
+
+        // Load table
+        ctr.loadTable(table);
+
+        // Check list is empty 
+        if (table.getRowCount() == 0) {
+            btn_delete.setEnabled(false);
+            btn_select.setEnabled(false);
+        }
+        
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -149,8 +212,8 @@ public class ProdutoListWin extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_select;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
