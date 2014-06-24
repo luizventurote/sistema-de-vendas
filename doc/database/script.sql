@@ -2,17 +2,6 @@ CREATE SCHEMA IF NOT EXISTS sistema_vendas DEFAULT CHARACTER SET utf8 COLLATE ut
 USE sistema_vendas ;
 
 -- -----------------------------------------------------
--- Table pedido
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS pedido (
-  id INT NOT NULL AUTO_INCREMENT,
-  status VARCHAR(45) NULL,
-  data DATE NULL,
-  PRIMARY KEY (id))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table produto
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS produto (
@@ -21,15 +10,8 @@ CREATE TABLE IF NOT EXISTS produto (
   estoque INT NULL,
   preco FLOAT NULL,
   peso FLOAT NULL,
-  desc TEXT NULL,
-  pedido_id INT NOT NULL,
-  PRIMARY KEY (id),
-  INDEX fk_produto_pedido1_idx (pedido_id ASC),
-  CONSTRAINT fk_produto_pedido1
-    FOREIGN KEY (pedido_id)
-    REFERENCES pedido (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  descricao TEXT NULL,
+  PRIMARY KEY (id))
 ENGINE = InnoDB;
 
 
@@ -49,14 +31,7 @@ CREATE TABLE IF NOT EXISTS cliente (
   cidade VARCHAR(45) NULL,
   uf VARCHAR(3) NULL,
   complemento VARCHAR(100) NULL,
-  pedido_id INT NOT NULL,
-  PRIMARY KEY (id),
-  INDEX fk_cliente_pedido1_idx (pedido_id ASC),
-  CONSTRAINT fk_cliente_pedido1
-    FOREIGN KEY (pedido_id)
-    REFERENCES pedido (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (id))
 ENGINE = InnoDB;
 
 
@@ -66,12 +41,37 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS funcionario (
   id INT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(70) NULL,
-  pedido_id INT NOT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table pedido
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS pedido (
+  id INT NOT NULL AUTO_INCREMENT,
+  status VARCHAR(45) NULL,
+  data DATE NULL,
+  produto_id INT NOT NULL,
+  cliente_id INT NOT NULL,
+  funcionario_id INT NOT NULL,
   PRIMARY KEY (id),
-  INDEX fk_funcionario_pedido_idx (pedido_id ASC),
-  CONSTRAINT fk_funcionario_pedido
-    FOREIGN KEY (pedido_id)
-    REFERENCES pedido (id)
+  INDEX fk_pedido_produto_idx (produto_id ASC),
+  INDEX fk_pedido_cliente1_idx (cliente_id ASC),
+  INDEX fk_pedido_funcionario1_idx (funcionario_id ASC),
+  CONSTRAINT fk_pedido_produto
+    FOREIGN KEY (produto_id)
+    REFERENCES produto (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_pedido_cliente1
+    FOREIGN KEY (cliente_id)
+    REFERENCES cliente (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_pedido_funcionario1
+    FOREIGN KEY (funcionario_id)
+    REFERENCES funcionario (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
