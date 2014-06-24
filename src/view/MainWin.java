@@ -10,7 +10,7 @@ public class MainWin extends javax.swing.JFrame {
 
     
     public MainWin() {
-        initComponents();
+        initComponents();        
     }
 
     @SuppressWarnings("unchecked")
