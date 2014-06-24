@@ -17,11 +17,12 @@ public class MainWin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         opt_exit = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        opt_produto = new javax.swing.JMenu();
+        opt_c_produto = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -29,7 +30,7 @@ public class MainWin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jLabel1.setText("v0.0.1");
+        jLabel2.setText("Sistema deVendas v0.0.1");
 
         jMenu1.setText("File");
 
@@ -44,8 +45,18 @@ public class MainWin extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Produto");
-        jMenuBar1.add(jMenu2);
+        opt_produto.setText("Produto");
+
+        opt_c_produto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        opt_c_produto.setText("Cadastrar Produto");
+        opt_c_produto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opt_c_produtoActionPerformed(evt);
+            }
+        });
+        opt_produto.add(opt_c_produto);
+
+        jMenuBar1.add(opt_produto);
 
         jMenu3.setText("Cliente");
         jMenuBar1.add(jMenu3);
@@ -63,15 +74,15 @@ public class MainWin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(802, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addContainerGap(712, Short.MAX_VALUE)
+                .addComponent(jLabel2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(500, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(jLabel2)
                 .addContainerGap())
         );
 
@@ -87,6 +98,14 @@ public class MainWin extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_opt_exitActionPerformed
+
+    private void opt_c_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opt_c_produtoActionPerformed
+        
+        ProdutoWin win = new ProdutoWin(this, true);
+        win.setLocationRelativeTo(null);
+        win.setVisible(true);
+        
+    }//GEN-LAST:event_opt_c_produtoActionPerformed
 
     public static void main(String args[]) {
 
@@ -119,13 +138,14 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem opt_c_produto;
     private javax.swing.JMenuItem opt_exit;
+    private javax.swing.JMenu opt_produto;
     // End of variables declaration//GEN-END:variables
 }
