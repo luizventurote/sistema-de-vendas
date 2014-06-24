@@ -1,14 +1,27 @@
 package view;
 
+import control.ProdutoControl;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luiz
  */
 public class ProdutoListWin extends javax.swing.JDialog {
+    
+    ProdutoControl ctr = ProdutoControl.getInstance();
 
     public ProdutoListWin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        try {
+            // Loading files in the table
+            ctr.loadTable(table);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -21,6 +34,7 @@ public class ProdutoListWin extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Produtos");
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

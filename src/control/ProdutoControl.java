@@ -137,7 +137,9 @@ public class ProdutoControl {
                 // New line
                 ((DefaultTableModel) table.getModel()).addRow(new Vector());
                 table.setValueAt(obj.getId(), linha, col++);
-                table.setValueAt(obj.getNome(), linha, col);
+                table.setValueAt(obj.getNome(), linha, col++);
+                table.setValueAt(obj.getEstoque(), linha, col++);
+                table.setValueAt(obj.getPreco(), linha, col);
 
                 // Reset number of columns
                 col = 0;

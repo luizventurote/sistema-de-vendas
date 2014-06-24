@@ -29,6 +29,7 @@ public class MainWin extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Vendas");
         setResizable(false);
 
         jLabel2.setText("Sistema deVendas v0.0.1");
