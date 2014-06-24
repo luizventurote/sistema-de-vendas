@@ -23,6 +23,7 @@ public class MainWin extends javax.swing.JFrame {
         opt_exit = new javax.swing.JMenuItem();
         opt_produto = new javax.swing.JMenu();
         opt_c_produto = new javax.swing.JMenuItem();
+        opt_l_produto = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -55,6 +56,14 @@ public class MainWin extends javax.swing.JFrame {
             }
         });
         opt_produto.add(opt_c_produto);
+
+        opt_l_produto.setText("Lista de Produtos");
+        opt_l_produto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opt_l_produtoActionPerformed(evt);
+            }
+        });
+        opt_produto.add(opt_l_produto);
 
         jMenuBar1.add(opt_produto);
 
@@ -107,6 +116,14 @@ public class MainWin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_opt_c_produtoActionPerformed
 
+    private void opt_l_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opt_l_produtoActionPerformed
+        
+        ProdutoListWin win = new ProdutoListWin(this, true);
+        win.setLocationRelativeTo(null);
+        win.setVisible(true);
+        
+    }//GEN-LAST:event_opt_l_produtoActionPerformed
+
     public static void main(String args[]) {
 
         try {
@@ -146,6 +163,7 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem opt_c_produto;
     private javax.swing.JMenuItem opt_exit;
+    private javax.swing.JMenuItem opt_l_produto;
     private javax.swing.JMenu opt_produto;
     // End of variables declaration//GEN-END:variables
 }
