@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jun 24, 2014 1:15:00 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated Jun 24, 2014 1:41:25 AM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="model.Produto" table="produto" catalog="sistema_vendas">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="pedido" class="model.Pedido" fetch="select">
-            <column name="pedido_id" not-null="true" />
-        </many-to-one>
         <property name="nome" type="string">
             <column name="nome" length="150" />
         </property>
@@ -23,8 +20,14 @@
         <property name="peso" type="java.lang.Float">
             <column name="peso" precision="12" scale="0" />
         </property>
-        <property name="desc" type="string">
-            <column name="desc" length="65535" />
+        <property name="descricao" type="string">
+            <column name="descricao" length="65535" />
         </property>
+        <set name="pedidos" table="pedido" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="produto_id" not-null="true" />
+            </key>
+            <one-to-many class="model.Pedido" />
+        </set>
     </class>
 </hibernate-mapping>

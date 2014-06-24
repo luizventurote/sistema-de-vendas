@@ -1,14 +1,37 @@
 package view;
 
+import control.ProdutoControl;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luiz
  */
 public class ProdutoWin extends javax.swing.JDialog {
-
+    
+    ProdutoControl ctr = ProdutoControl.getInstance();
+    String nome;
+    int estoque;
+    Float preco;
+    Float peso;
+    String descricao;
+    
     public ProdutoWin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        // Valores padrão
+        input_nome.setText("");
+        input_peso.setText( Integer.toString(0) );
+        input_preco.setText( Integer.toString(0) );
+        input_desc.setText("");
+        input_estoque.setText( Integer.toString(0) );
+        
+        // Carrega o ID
+        input_id.setText( Integer.toString( ctr.getTheNextID() ) );
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -52,6 +75,11 @@ public class ProdutoWin extends javax.swing.JDialog {
         jLabel6.setText("Descrição");
 
         btn_save.setText("Cadastrar");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
 
         btn_produtos.setText("...");
         btn_produtos.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +174,25 @@ public class ProdutoWin extends javax.swing.JDialog {
         win.setVisible(true);
         
     }//GEN-LAST:event_btn_produtosActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        
+        try {
+            
+            this.nome = input_nome.getText();
+            this.estoque = Integer.parseInt( input_estoque.getText() );
+            this.preco = Float.parseFloat( input_preco.getText().replace(",", ".") );
+            this.peso = Float.parseFloat( input_peso.getText().replace(",", ".") );
+            this.descricao = input_desc.getText() ;
+            
+            ctr.insert(nome, estoque, preco, peso, descricao);
+            this.setVisible(false);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro! " + ex);
+        }
+        
+    }//GEN-LAST:event_btn_saveActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

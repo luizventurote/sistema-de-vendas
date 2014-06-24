@@ -9,6 +9,7 @@ public class DefaultDao {
     
     Session session;
     private String table_reference;
+    private String db_reference = "sistema_vendas";
     
     /**
      * Pega o valor do próximo ID
@@ -25,7 +26,7 @@ public class DefaultDao {
             this.session.beginTransaction();
 
             // HQL           
-            Query con = this.session.createSQLQuery("SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='layout_maker' AND TABLE_NAME='"+this.table_reference+"';");
+            Query con = this.session.createSQLQuery("SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='"+this.db_reference+"' AND TABLE_NAME='"+this.table_reference+"';");
 
             List result = con.list();
 

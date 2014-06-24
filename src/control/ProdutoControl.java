@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Produto;
@@ -20,7 +21,7 @@ public class ProdutoControl {
 
     private static ProdutoControl instance = new ProdutoControl();
     ProdutoDao dao;
-    Produto frame;
+    Produto obj;
 
     private ProdutoControl() {
 
@@ -43,12 +44,17 @@ public class ProdutoControl {
      * @throws Exception
      * @throws SQLException
      */
-    public void insert(String name) throws Exception, SQLException {
+    public void insert(String nome, int estoque, Float preco, Float peso, String descricao) throws Exception, SQLException {
 
-        this.frame = new Produto();
-        this.frame.setNome(name);
-
-        dao.insert(this.frame);
+        this.obj = new Produto();
+        this.obj.setNome(nome);
+        this.obj.setEstoque(estoque);
+        this.obj.setPreco(preco);
+        this.obj.setPeso(peso);
+        this.obj.setDescricao(descricao);
+        dao.insert(this.obj);
+        
+        JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
     }
 
@@ -60,11 +66,11 @@ public class ProdutoControl {
      */
     public void update(int id, String nome) throws Exception, SQLException {
 
-        this.frame = new Produto();
-        this.frame.setId(id);
-        this.frame.setNome(nome);
+        this.obj = new Produto();
+        this.obj.setId(id);
+        this.obj.setNome(nome);
 
-        dao.update(this.frame);
+        dao.update(this.obj);
 
     }
 
