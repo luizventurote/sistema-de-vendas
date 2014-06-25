@@ -52,18 +52,13 @@ CREATE TABLE IF NOT EXISTS pedido (
   id INT NOT NULL AUTO_INCREMENT,
   status VARCHAR(45) NULL,
   data DATE NULL,
+  valor FLOAT NULL,
   produto_id INT NOT NULL,
   cliente_id INT NOT NULL,
   funcionario_id INT NOT NULL,
   PRIMARY KEY (id),
-  INDEX fk_pedido_produto_idx (produto_id ASC),
   INDEX fk_pedido_cliente1_idx (cliente_id ASC),
   INDEX fk_pedido_funcionario1_idx (funcionario_id ASC),
-  CONSTRAINT fk_pedido_produto
-    FOREIGN KEY (produto_id)
-    REFERENCES produto (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT fk_pedido_cliente1
     FOREIGN KEY (cliente_id)
     REFERENCES cliente (id)
@@ -72,6 +67,28 @@ CREATE TABLE IF NOT EXISTS pedido (
   CONSTRAINT fk_pedido_funcionario1
     FOREIGN KEY (funcionario_id)
     REFERENCES funcionario (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table pedido_item
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS pedido_item (
+  produto_id INT NOT NULL,
+  pedido_id INT NOT NULL,
+  PRIMARY KEY (produto_id, pedido_id),
+  INDEX fk_produto_has_pedido_pedido1_idx (pedido_id ASC),
+  INDEX fk_produto_has_pedido_produto1_idx (produto_id ASC),
+  CONSTRAINT fk_produto_has_pedido_produto1
+    FOREIGN KEY (produto_id)
+    REFERENCES produto (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_produto_has_pedido_pedido1
+    FOREIGN KEY (pedido_id)
+    REFERENCES pedido (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jun 24, 2014 1:41:25 AM by Hibernate Tools 3.6.0 -->
+<!-- Generated Jun 25, 2014 6:32:55 PM by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="model.Pedido" table="pedido" catalog="sistema_vendas">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="produto" class="model.Produto" fetch="select">
-            <column name="produto_id" not-null="true" />
-        </many-to-one>
         <many-to-one name="cliente" class="model.Cliente" fetch="select">
             <column name="cliente_id" not-null="true" />
         </many-to-one>
@@ -23,5 +20,19 @@
         <property name="data" type="date">
             <column name="data" length="10" />
         </property>
+        <property name="valor" type="java.lang.Float">
+            <column name="valor" precision="12" scale="0" />
+        </property>
+        <property name="produtoId" type="int">
+            <column name="produto_id" not-null="true" />
+        </property>
+        <set name="produtos" table="pedido_item" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="pedido_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="model.Produto">
+                <column name="produto_id" not-null="true" />
+            </many-to-many>
+        </set>
     </class>
 </hibernate-mapping>
