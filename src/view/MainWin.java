@@ -130,6 +130,11 @@ public class MainWin extends javax.swing.JFrame {
         opt_pedido.add(opt_pedido_c);
 
         opt_pedido_l.setText("Lista de Pedidos");
+        opt_pedido_l.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opt_pedido_lActionPerformed(evt);
+            }
+        });
         opt_pedido.add(opt_pedido_l);
 
         jMenuBar1.add(opt_pedido);
@@ -224,6 +229,14 @@ public class MainWin extends javax.swing.JFrame {
         win.setVisible(true);
         
     }//GEN-LAST:event_opt_funcionario_cActionPerformed
+
+    private void opt_pedido_lActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opt_pedido_lActionPerformed
+        
+        PedidoListWin win = new PedidoListWin(this, true);
+        win.setLocationRelativeTo(null);
+        win.setVisible(true);
+        
+    }//GEN-LAST:event_opt_pedido_lActionPerformed
 
     public static void main(String args[]) {
 

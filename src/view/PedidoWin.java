@@ -21,7 +21,7 @@ public class PedidoWin extends javax.swing.JDialog {
     // Campos
     int id;
     int id_cliente = 0;
-    int id_funcionario = 1;
+    int id_vendedor = 1;
     String data_pedido;
     int status;
     
@@ -347,7 +347,7 @@ public class PedidoWin extends javax.swing.JDialog {
         try {
             
             // Verifica se o cliente e o funcionário foram selecionados
-            if( this.id_cliente > 0 && this.id_funcionario > 0) {
+            if( this.id_cliente > 0 && this.id_vendedor > 0) {
                 
                 this.data_pedido = input_data.getText();
 
@@ -365,7 +365,7 @@ public class PedidoWin extends javax.swing.JDialog {
                 if(this.save_opt == 1) {
                     //ctr.update(this.id, this.nome, this.email, this.nasc, this.tel, this.cel, this.end, this.bairro, this.cidade, this.uf, this.comp, this.num );
                 } else {
-                    //ctr.insert();
+                    ctr.insert(this.id_cliente, this.id_vendedor, this.status, this.data_pedido, this.table);
                 }
                 this.setVisible(false);
 
@@ -403,13 +403,15 @@ public class PedidoWin extends javax.swing.JDialog {
         
         try {
             
-//            VendedorListWin win = new VendedorListWin(null, true, true);
-//            win.setLocationRelativeTo(null);
-//            win.setVisible(true);
+            FuncionarioListWin win = new FuncionarioListWin(null, true, true);
+            win.setLocationRelativeTo(null);
+            win.setVisible(true);
 
             // Pega o objeto selecionado
-            //this.id_cliente = win.getSelected();
-            this.id_cliente = 1;
+            this.id_vendedor = win.getSelected();
+            
+            // Altera o valor do input
+            input_vendedor.setText( win.getSelected_nome() );
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro! " + ex);

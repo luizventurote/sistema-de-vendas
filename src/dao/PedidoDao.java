@@ -124,7 +124,7 @@ public class PedidoDao extends DefaultDao {
             this.session.beginTransaction();
 
             // HQL           
-            Query con = this.session.createQuery("FROM "+this.object_reference);
+            Query con = this.session.createQuery("FROM Pedido p JOIN FETCH p.cliente ORDER BY data DESC");
 
             list = con.list();
 
