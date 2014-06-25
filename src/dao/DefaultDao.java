@@ -5,10 +5,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-public class DefaultDao {
+public abstract class DefaultDao {
     
     Session session;
     private String table_reference;
+     String object_reference;
     private String db_reference = "sistema_vendas";
     
     /**

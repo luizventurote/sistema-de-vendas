@@ -24,7 +24,9 @@ public class MainWin extends javax.swing.JFrame {
         opt_produto = new javax.swing.JMenu();
         opt_c_produto = new javax.swing.JMenuItem();
         opt_l_produto = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        opt_cliente = new javax.swing.JMenu();
+        opt_cliente_c = new javax.swing.JMenuItem();
+        opt_cliente_l = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
 
@@ -32,7 +34,7 @@ public class MainWin extends javax.swing.JFrame {
         setTitle("Sistema de Vendas");
         setResizable(false);
 
-        jLabel2.setText("Sistema deVendas v0.0.1");
+        jLabel2.setText("Sistema deVendas v0.0.2");
 
         jMenu1.setText("File");
 
@@ -68,8 +70,27 @@ public class MainWin extends javax.swing.JFrame {
 
         jMenuBar1.add(opt_produto);
 
-        jMenu3.setText("Cliente");
-        jMenuBar1.add(jMenu3);
+        opt_cliente.setText("Cliente");
+
+        opt_cliente_c.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        opt_cliente_c.setText("Cadastrar Cliente");
+        opt_cliente_c.setToolTipText("");
+        opt_cliente_c.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opt_cliente_cActionPerformed(evt);
+            }
+        });
+        opt_cliente.add(opt_cliente_c);
+
+        opt_cliente_l.setText("Lista de Clientes");
+        opt_cliente_l.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opt_cliente_lActionPerformed(evt);
+            }
+        });
+        opt_cliente.add(opt_cliente_l);
+
+        jMenuBar1.add(opt_cliente);
 
         jMenu4.setText("Vendedor");
         jMenuBar1.add(jMenu4);
@@ -84,14 +105,14 @@ public class MainWin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(712, Short.MAX_VALUE)
+                .addContainerGap(858, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(500, Short.MAX_VALUE)
+                .addContainerGap(569, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addContainerGap())
         );
@@ -124,6 +145,22 @@ public class MainWin extends javax.swing.JFrame {
         win.setVisible(true);
         
     }//GEN-LAST:event_opt_l_produtoActionPerformed
+
+    private void opt_cliente_cActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opt_cliente_cActionPerformed
+        
+        ClienteWin win = new ClienteWin(this, true);
+        win.setLocationRelativeTo(null);
+        win.setVisible(true);
+        
+    }//GEN-LAST:event_opt_cliente_cActionPerformed
+
+    private void opt_cliente_lActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opt_cliente_lActionPerformed
+        
+        ClienteListWin win = new ClienteListWin(this, true);
+        win.setLocationRelativeTo(null);
+        win.setVisible(true);
+        
+    }//GEN-LAST:event_opt_cliente_lActionPerformed
 
     public static void main(String args[]) {
 
@@ -158,11 +195,13 @@ public class MainWin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem opt_c_produto;
+    private javax.swing.JMenu opt_cliente;
+    private javax.swing.JMenuItem opt_cliente_c;
+    private javax.swing.JMenuItem opt_cliente_l;
     private javax.swing.JMenuItem opt_exit;
     private javax.swing.JMenuItem opt_l_produto;
     private javax.swing.JMenu opt_produto;
