@@ -5,6 +5,7 @@ import dao.FuncionarioDao;
 import dao.PedidoDao;
 import dao.ProdutoDao;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -66,6 +67,7 @@ public class PedidoControl extends DefaultControl {
         this.obj.setFuncionario( fun_dao.get(funcionario_id) );
         this.obj.setStatus( this.getStatus(status) );
         this.obj.setData( this.formatarData(data_pedido) );
+        this.obj.setValor( this.updateTotalValue(table) );
         
         // Insere os arquivos ao componente
         int qtd_row = table.getRowCount();
@@ -285,6 +287,11 @@ public class PedidoControl extends DefaultControl {
         
     }
     
+    /**
+     * Pega a string que representa o status do pedido
+     * @param type
+     * @return 
+     */
     public String getStatus(int type) {
         
         switch(type) {
@@ -296,7 +303,30 @@ public class PedidoControl extends DefaultControl {
                 return "cancelado";
         }
         
-        return "";
+        return ""; 
+    }
+    
+    /**
+     * Atualiza o valor total do pedido
+     * 
+     * @param table
+     * @return 
+     */
+    public Float updateTotalValue(JTable table) {
+        
+        Float total = Float.parseFloat("0");
+
+        // Pega a quantiade de linhas selecionadas
+        int size = table.getRowCount();
+
+        // Soma os valores
+        for (int i = 0; i < size; i++) { 
+            
+            
+            total = ( Float.parseFloat(table.getValueAt(i, 2).toString()) * Integer.parseInt(table.getValueAt(i, 3).toString()) + total );
+        }
+        
+        return total;
         
     }
 
