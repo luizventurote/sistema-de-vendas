@@ -1,11 +1,8 @@
 package control;
 
 import dao.PedidoDao;
+import dao.ProdutoDao;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -13,15 +10,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.Pedido;
+import model.Produto;
 import view.PedidoWin;
 
 /**
  *
  * @author Luiz
  */
-public class PedidoControl {
+public class PedidoControl extends DefaultControl {
 
     private static PedidoControl instance = new PedidoControl();
     PedidoDao dao;
@@ -47,7 +46,7 @@ public class PedidoControl {
      * @throws Exception
      * @throws SQLException
      */
-    public void insert(int produto_id, int cliente_id, int funcionario_id, String status, String data_pedido) throws Exception, SQLException {
+    public void insert(int cliente_id, int funcionario_id, String status, String data_pedido, JTable table) throws Exception, SQLException {
         
         this.obj = new Pedido();
         dao.insert(this.obj);
@@ -171,26 +170,75 @@ public class PedidoControl {
         Pedido obj = this.get(id);
         
         win.setId( id );
+    } 
+    
+    /**
+     * Adiciona itens na tabela
+     *
+     * @param list
+     */
+    public void addItemTable(JTable table, List list) throws Exception, SQLException {
+
+        ProdutoDao produto_dao = new ProdutoDao();
+
+        int id;
+
+        Produto file;
+
+        int size_list = list.size();
+
+        if (size_list > 0) {;
+
+            // Config table
+            int linha = table.getRowCount();
+            int col = 0;
+
+            for (int i = 0; i < size_list; i++) {
+
+                id = Integer.parseInt(list.get(i).toString());
+
+                if (this.SearchIdInTable(table, id)) { 
+
+                } else {
+
+                    file = produto_dao.get(id);
+
+                    // New line
+                    ((DefaultTableModel) table.getModel()).addRow(new Vector());
+                    table.setValueAt(file.getId(), linha, col++);
+                    table.setValueAt(file.getNome(), linha, col++);
+                    table.setValueAt(file.getPreco(), linha, col++);
+                    table.setValueAt(1, linha, col);
+
+                    // Reset number of columns
+                    col = 0;
+
+                    linha++;
+
+                }
+            }
+        }
     }
     
     /**
-     * Converte e formata uma String para uma data
-     * @param data
-     * @return Data formatada
-     * @throws Exception 
+     * Procura por um ID na tabela
+     * @param table
+     * @param id
+     * @return 
      */
-    public Date formatarData(String data) throws Exception {   
-        if (data == null || data.equals(""))  
-            return null;  
-          
-        Date date = null;  
-        try {  
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-            date = (java.util.Date)formatter.parse(data);  
-        } catch (ParseException e) {              
-            throw e;  
-        }  
-        return date;  
-    } 
+    public boolean SearchIdInTable(JTable table, int id) {
+        
+        int qtd_row = table.getRowCount();
+                
+        for (int i = 0; i < qtd_row; i++) {
+
+            if( id == Integer.parseInt( table.getValueAt(i, 0).toString() ) ) {
+                return true;
+            }
+        }
+        
+        return false;
+        
+    }
 
 }

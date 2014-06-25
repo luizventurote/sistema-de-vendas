@@ -28,6 +28,9 @@ public class MainWin extends javax.swing.JFrame {
         opt_cliente_c = new javax.swing.JMenuItem();
         opt_cliente_l = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        opt_pedido = new javax.swing.JMenu();
+        opt_pedido_c = new javax.swing.JMenuItem();
+        opt_pedido_l = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,6 +97,22 @@ public class MainWin extends javax.swing.JFrame {
 
         jMenu4.setText("Vendedor");
         jMenuBar1.add(jMenu4);
+
+        opt_pedido.setText("Pedido");
+
+        opt_pedido_c.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        opt_pedido_c.setText("Cadastrar Pedido");
+        opt_pedido_c.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opt_pedido_cActionPerformed(evt);
+            }
+        });
+        opt_pedido.add(opt_pedido_c);
+
+        opt_pedido_l.setText("Lista de Pedidos");
+        opt_pedido.add(opt_pedido_l);
+
+        jMenuBar1.add(opt_pedido);
 
         jMenu5.setText("Ferramentas");
         jMenuBar1.add(jMenu5);
@@ -162,6 +181,14 @@ public class MainWin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_opt_cliente_lActionPerformed
 
+    private void opt_pedido_cActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opt_pedido_cActionPerformed
+        
+        PedidoWin win = new PedidoWin(this, true);
+        win.setLocationRelativeTo(null);
+        win.setVisible(true);
+        
+    }//GEN-LAST:event_opt_pedido_cActionPerformed
+
     public static void main(String args[]) {
 
         try {
@@ -204,6 +231,9 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JMenuItem opt_cliente_l;
     private javax.swing.JMenuItem opt_exit;
     private javax.swing.JMenuItem opt_l_produto;
+    private javax.swing.JMenu opt_pedido;
+    private javax.swing.JMenuItem opt_pedido_c;
+    private javax.swing.JMenuItem opt_pedido_l;
     private javax.swing.JMenu opt_produto;
     // End of variables declaration//GEN-END:variables
 }

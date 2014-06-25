@@ -1,6 +1,6 @@
 package view;
 
-import control.ClienteControl;
+import control.PedidoControl;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -8,15 +8,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Luiz
  */
-public class ClienteListWin extends javax.swing.JDialog {
+public class PedidoListWin extends javax.swing.JDialog {
     
-    ClienteControl ctr = ClienteControl.getInstance();
+    PedidoControl ctr = PedidoControl.getInstance();
     int row_selected;
     int opt_select;
     int selected;
-    String selected_nome;
 
-    public ClienteListWin(java.awt.Frame parent, boolean modal) {
+    public PedidoListWin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
@@ -29,7 +28,7 @@ public class ClienteListWin extends javax.swing.JDialog {
         }
     }
     
-    public ClienteListWin(java.awt.Frame parent, boolean modal, boolean select) {
+    public PedidoListWin(java.awt.Frame parent, boolean modal, boolean select) {
         super(parent, modal);
         initComponents();
         
@@ -140,7 +139,6 @@ public class ClienteListWin extends javax.swing.JDialog {
     private void btn_selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selectActionPerformed
           
         this.selected = Integer.parseInt(table.getValueAt(this.row_selected, 0).toString());
-        this.selected_nome = table.getValueAt(this.row_selected, 1).toString();
         
         this.setVisible(false);
  
@@ -202,10 +200,6 @@ public class ClienteListWin extends javax.swing.JDialog {
     public int getSelected() {
         return selected;
     }
-
-    public String getSelected_nome() {
-        return selected_nome;
-    }
         
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -221,20 +215,20 @@ public class ClienteListWin extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClienteListWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidoListWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClienteListWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidoListWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClienteListWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidoListWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClienteListWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidoListWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ClienteListWin dialog = new ClienteListWin(new javax.swing.JFrame(), true);
+                PedidoListWin dialog = new PedidoListWin(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

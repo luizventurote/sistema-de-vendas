@@ -1,6 +1,8 @@
 package view;
 
 import control.ProdutoControl;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,7 +15,9 @@ public class ProdutoListWin extends javax.swing.JDialog {
     ProdutoControl ctr = ProdutoControl.getInstance();
     int row_selected;
     int opt_select;
+    int opt_list_select = 0;
     int selected;
+    List list;
 
     public ProdutoListWin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -137,8 +141,27 @@ public class ProdutoListWin extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selectActionPerformed
-          
-        this.selected = Integer.parseInt(table.getValueAt(this.row_selected, 0).toString());
+        
+        // Verifica se a opção de selecionar mais de um objeto está ativada
+        if( this.opt_list_select == 1 ) {
+            
+            this.list = new ArrayList();
+
+            // Pega a quantiade de linhas selecionadas
+            int list_size = table.getSelectedRows().length;
+
+            // Pega as linhas selecionadas
+            int[] list_file = table.getSelectedRows();
+
+            // Salva os IDs na list
+            for (int i = 0; i < list_size; i++) {
+                this.list.add(Integer.parseInt(table.getValueAt(list_file[i], 0).toString()));
+            }
+            
+        } else {
+            this.selected = Integer.parseInt(table.getValueAt(this.row_selected, 0).toString());
+        }
+        
         
         this.setVisible(false);
  
@@ -195,6 +218,14 @@ public class ProdutoListWin extends javax.swing.JDialog {
             btn_select.setEnabled(false);
         }
         
+    }
+
+    public void enableListSelect() {
+        this.opt_list_select = 1;
+    }
+
+    public List getList() {
+        return list;
     }
 
     public int getSelected() {

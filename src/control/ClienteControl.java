@@ -2,10 +2,6 @@ package control;
 
 import dao.ClienteDao;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -21,7 +17,7 @@ import view.ClienteWin;
  *
  * @author Luiz
  */
-public class ClienteControl {
+public class ClienteControl extends DefaultControl {
 
     private static ClienteControl instance = new ClienteControl();
     ClienteDao dao;
@@ -218,25 +214,5 @@ public class ClienteControl {
         win.setUf(obj.getUf());
         win.setCidade(obj.getCidade());
     }
-    
-    /**
-     * Converte e formata uma String para uma data
-     * @param data
-     * @return Data formatada
-     * @throws Exception 
-     */
-    public Date formatarData(String data) throws Exception {   
-        if (data == null || data.equals(""))  
-            return null;  
-          
-        Date date = null;  
-        try {  
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-            date = (java.util.Date)formatter.parse(data);  
-        } catch (ParseException e) {              
-            throw e;  
-        }  
-        return date;  
-    } 
 
 }
