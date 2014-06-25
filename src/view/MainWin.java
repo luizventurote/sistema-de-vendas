@@ -27,7 +27,9 @@ public class MainWin extends javax.swing.JFrame {
         opt_cliente = new javax.swing.JMenu();
         opt_cliente_c = new javax.swing.JMenuItem();
         opt_cliente_l = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        opt_funcionario = new javax.swing.JMenu();
+        opt_funcionario_c = new javax.swing.JMenuItem();
+        opt_funcionario_l = new javax.swing.JMenuItem();
         opt_pedido = new javax.swing.JMenu();
         opt_pedido_c = new javax.swing.JMenuItem();
         opt_pedido_l = new javax.swing.JMenuItem();
@@ -95,8 +97,26 @@ public class MainWin extends javax.swing.JFrame {
 
         jMenuBar1.add(opt_cliente);
 
-        jMenu4.setText("Vendedor");
-        jMenuBar1.add(jMenu4);
+        opt_funcionario.setText("Funcionário");
+
+        opt_funcionario_c.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        opt_funcionario_c.setText("Cadastrar funcionário");
+        opt_funcionario_c.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opt_funcionario_cActionPerformed(evt);
+            }
+        });
+        opt_funcionario.add(opt_funcionario_c);
+
+        opt_funcionario_l.setText("Lista de Funcionários");
+        opt_funcionario_l.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opt_funcionario_lActionPerformed(evt);
+            }
+        });
+        opt_funcionario.add(opt_funcionario_l);
+
+        jMenuBar1.add(opt_funcionario);
 
         opt_pedido.setText("Pedido");
 
@@ -189,6 +209,22 @@ public class MainWin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_opt_pedido_cActionPerformed
 
+    private void opt_funcionario_lActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opt_funcionario_lActionPerformed
+        
+        FuncionarioListWin win = new FuncionarioListWin(this, true);
+        win.setLocationRelativeTo(null);
+        win.setVisible(true);
+        
+    }//GEN-LAST:event_opt_funcionario_lActionPerformed
+
+    private void opt_funcionario_cActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opt_funcionario_cActionPerformed
+        
+        FuncionarioWin win = new FuncionarioWin(this, true);
+        win.setLocationRelativeTo(null);
+        win.setVisible(true);
+        
+    }//GEN-LAST:event_opt_funcionario_cActionPerformed
+
     public static void main(String args[]) {
 
         try {
@@ -222,7 +258,6 @@ public class MainWin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem opt_c_produto;
@@ -230,6 +265,9 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JMenuItem opt_cliente_c;
     private javax.swing.JMenuItem opt_cliente_l;
     private javax.swing.JMenuItem opt_exit;
+    private javax.swing.JMenu opt_funcionario;
+    private javax.swing.JMenuItem opt_funcionario_c;
+    private javax.swing.JMenuItem opt_funcionario_l;
     private javax.swing.JMenuItem opt_l_produto;
     private javax.swing.JMenu opt_pedido;
     private javax.swing.JMenuItem opt_pedido_c;
