@@ -7,13 +7,14 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
  * @author Luiz
  */
 public class PedidoWin extends javax.swing.JDialog {
-    
+
     PedidoControl ctr = PedidoControl.getInstance();
     int selected;
     int save_opt = 0;
@@ -24,21 +25,21 @@ public class PedidoWin extends javax.swing.JDialog {
     int id_vendedor = 1;
     String data_pedido;
     int status;
-    
+
     public PedidoWin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         // Data atual
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        
+
         // Valores padrão
-        input_data.setText( dateFormat.format(date) );
-        
+        input_data.setText(dateFormat.format(date));
+
         // Carrega o ID
-        input_id.setText( Integer.toString( ctr.getTheNextID() ) );
-        
+        input_id.setText(Integer.toString(ctr.getTheNextID()));
+
     }
 
     @SuppressWarnings("unchecked")
@@ -349,7 +350,7 @@ public class PedidoWin extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selectActionPerformed
-        
+
         try {
             PedidoListWin win = new PedidoListWin(null, true, true);
             win.setLocationRelativeTo(null);
@@ -357,45 +358,47 @@ public class PedidoWin extends javax.swing.JDialog {
 
             // Pega o objeto selecionado
             this.selected = win.getSelected();
-            
-            if(this.selected > 0) {
+
+            if (this.selected > 0) {
                 // Altera a opção de salvar
                 btn_save.setText("Salvar");
                 this.save_opt = 1;
-            
+
                 // Carrega os dados
                 ctr.loadValuesByID(this, this.selected);
+                
+                this.atualizarValor();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro! " + ex);
         }
-        
+
     }//GEN-LAST:event_btn_selectActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-        
+
         try {
-            
+
             this.atualizarValor();
-            
+
             // Verifica se o cliente e o funcionário foram selecionados
-            if( this.id_cliente > 0 && this.id_vendedor > 0) {
-                
+            if (this.id_cliente > 0 && this.id_vendedor > 0) {
+
                 this.data_pedido = input_data.getText();
 
                 // Radio Button
-                if( radio_confirm.isSelected() ) {
+                if (radio_confirm.isSelected()) {
                     this.status = 1;
                 }
-                if( radio_pen.isSelected() ) {
+                if (radio_pen.isSelected()) {
                     this.status = 0;
                 }
-                if( radio_cancel.isSelected() ) {
+                if (radio_cancel.isSelected()) {
                     this.status = 2;
                 }
 
-                if(this.save_opt == 1) {
-                    //ctr.update(this.id, this.nome, this.email, this.nasc, this.tel, this.cel, this.end, this.bairro, this.cidade, this.uf, this.comp, this.num );
+                if (this.save_opt == 1) {
+                    ctr.update(this.id, this.id_cliente, this.id_vendedor, this.status, this.data_pedido, this.table);
                 } else {
                     ctr.insert(this.id_cliente, this.id_vendedor, this.status, this.data_pedido, this.table);
                 }
@@ -404,51 +407,51 @@ public class PedidoWin extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um cliente e um vendedor!");
             }
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro! " + ex);
         }
-        
+
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_select_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_select_clienteActionPerformed
-        
+
         try {
-            
+
             ClienteListWin win = new ClienteListWin(null, true, true);
             win.setLocationRelativeTo(null);
             win.setVisible(true);
 
             // Pega o objeto selecionado
             this.id_cliente = win.getSelected();
-            
+
             // Altera o valor do input
-            input_cliente.setText( win.getSelected_nome() );
+            input_cliente.setText(win.getSelected_nome());
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro! " + ex);
         }
-        
+
     }//GEN-LAST:event_btn_select_clienteActionPerformed
 
     private void btn_select_vendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_select_vendedorActionPerformed
-        
+
         try {
-            
+
             FuncionarioListWin win = new FuncionarioListWin(null, true, true);
             win.setLocationRelativeTo(null);
             win.setVisible(true);
 
             // Pega o objeto selecionado
             this.id_vendedor = win.getSelected();
-            
+
             // Altera o valor do input
-            input_vendedor.setText( win.getSelected_nome() );
+            input_vendedor.setText(win.getSelected_nome());
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro! " + ex);
         }
-                
+
     }//GEN-LAST:event_btn_select_vendedorActionPerformed
 
     private void radio_confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_confirmActionPerformed
@@ -468,40 +471,77 @@ public class PedidoWin extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_pagamentoActionPerformed
 
     private void btn_produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_produtosActionPerformed
-        
+
         try {
-            
+
             ProdutoListWin win = new ProdutoListWin(null, true, true);
             win.setLocationRelativeTo(null);
             win.enableListSelect();
             win.setVisible(true);
-            
+
             // Adiciona os itens selecionados na lista
             ctr.addItemTable(table, win.getList());
-            
+
             this.atualizarValor();
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro! " + ex);
         }
-        
+
     }//GEN-LAST:event_btn_produtosActionPerformed
 
     private void btn_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_valorActionPerformed
-        
+
         this.atualizarValor();
-        
+
     }//GEN-LAST:event_btn_valorActionPerformed
 
     public void atualizarValor() {
-        input_valor_total.setText( ctr.updateTotalValue(table).toString() );
+        input_valor_total.setText(ctr.updateTotalValue(table).toString());
     }
-    
+
     public void setId(int id) {
         this.id = id;
-        input_id.setText( Integer.toString(id) );
-    } 
-    
+        input_id.setText(Integer.toString(id));
+    }
+
+    public void setCliente(int id_cliente, String nome) {
+        this.id_cliente = id_cliente;
+        input_cliente.setText(nome);
+    }
+
+    public void setVendedor(int id_vendedor, String nome) {
+        this.id_vendedor = id_vendedor;
+        input_vendedor.setText(nome);
+    }
+
+    public void setData_pedido(String data_pedido) {
+        this.data_pedido = data_pedido;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+
+        // Radio Button
+        if (this.status == 0) {
+            radio_pen.setSelected(true);
+        }
+        if (this.status == 1) {
+            radio_confirm.setSelected(true);
+        }
+        if (this.status == 2) {
+            radio_cancel.setSelected(true);
+        }
+    }
+
+    public void setTable(JTable table) {
+        this.table = table;
+    }
+
+    public JTable getTable() {
+        return table;
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

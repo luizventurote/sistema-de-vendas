@@ -159,7 +159,7 @@ public class PedidoDao extends DefaultDao {
             this.session.beginTransaction();
 
             // HQL para recuperar o componente do banco de dados           
-            Query con = this.session.createQuery("FROM "+this.object_reference+" obj WHERE obj.id=" + id);
+            Query con = this.session.createQuery("FROM "+this.object_reference+" obj JOIN FETCH obj.cliente JOIN FETCH obj.funcionario JOIN FETCH obj.produtos WHERE obj.id=" + id);
 
             con.setMaxResults(1);
 

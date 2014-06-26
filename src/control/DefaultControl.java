@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,5 +32,16 @@ public class DefaultControl {
         }  
         return date;  
     } 
+    
+    /**
+     * Limpa o conteúdo de uma tabela
+     * @param table 
+     */
+    public void cleanTable(JTable table) {
+        // Clean table
+        for (int i = table.getRowCount() - 1; i >= 0; i--) {
+            ((DefaultTableModel) table.getModel()).removeRow(i);
+        }
+    }
     
 }
