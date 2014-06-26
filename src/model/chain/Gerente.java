@@ -12,10 +12,11 @@ public class Gerente extends Funcionario {
         super();
     }
     
-    @Override
     public void processarSolicitacao(Float valor) {
 
-        if (valor < 10000.0) {
+        int val = valor.intValue();
+        
+        if (val < 10000) {
             System.out.println("Gerente aprovou");
         } else if (successor != null) {
             System.out.println("O valor é muito alto!");

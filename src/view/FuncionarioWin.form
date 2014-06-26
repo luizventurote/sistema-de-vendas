@@ -53,6 +53,8 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="radio_gerente" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btn_gerente" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_save" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -79,6 +81,7 @@
                   <Component id="btn_save" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="radio_vendedor" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="radio_gerente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_gerente" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -135,6 +138,15 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Gerente"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_gerente">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Selecionar Gerente"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_gerenteActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

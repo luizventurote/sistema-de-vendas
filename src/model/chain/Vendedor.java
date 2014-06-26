@@ -12,11 +12,14 @@ public class Vendedor extends Funcionario {
         super();
     }
 
-    @Override
     public void processarSolicitacao(Float valor) {
-        if (valor < 1000.0) {
+        
+        int val = valor.intValue();
+        
+        if ( val < 1000 ) {
             System.out.println("Vendedor aprovou");
         } else if (successor != null) {
+            System.out.println("Passou para o gerente");
             successor.processarSolicitacao(valor);
         }
     }

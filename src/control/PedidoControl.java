@@ -478,7 +478,21 @@ public class PedidoControl extends DefaultControl {
             
             Vendedor ven = new Vendedor();
             ven.setId(fun.getId());
-            ven.setNome(fun.getNome());            
+            ven.setNome(fun.getNome());
+            ven.setIdGerente(fun.getIdGerente());
+            
+            System.out.println(ven.getNome());
+            
+            System.out.println("Teste");
+            
+            // Recupera o gerente
+            Funcionario gerente_aux = fun_dao.get(ven.getIdGerente());
+            Gerente gerente = new Gerente();
+            gerente.setId(gerente_aux.getId());
+            gerente.setNome(gerente_aux.getNome());
+            
+            // Adiciona um sucessor
+            ven.setSucessor(gerente);
             
             ven.processarSolicitacao(Float.parseFloat(valor));
         }
@@ -487,7 +501,8 @@ public class PedidoControl extends DefaultControl {
             
             Gerente ger = new Gerente();
             ger.setId(fun.getId());
-            ger.setNome(fun.getNome());            
+            ger.setNome(fun.getNome());     
+            ger.setIdGerente(fun.getIdGerente());
             
             ger.processarSolicitacao(Float.parseFloat(valor));
             

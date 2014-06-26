@@ -15,6 +15,7 @@ public class FuncionarioWin extends javax.swing.JDialog {
     int selected;
     int save_opt = 0;
     int tipo;
+    int ger_selected = 0;
 
     // Campos
     int id;
@@ -45,6 +46,7 @@ public class FuncionarioWin extends javax.swing.JDialog {
         btn_produtos = new javax.swing.JButton();
         radio_vendedor = new javax.swing.JRadioButton();
         radio_gerente = new javax.swing.JRadioButton();
+        btn_gerente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Funcionário");
@@ -77,6 +79,14 @@ public class FuncionarioWin extends javax.swing.JDialog {
         opt_tipo.add(radio_gerente);
         radio_gerente.setText("Gerente");
 
+        btn_gerente.setText("Selecionar Gerente");
+        btn_gerente.setToolTipText("");
+        btn_gerente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gerenteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,6 +111,8 @@ public class FuncionarioWin extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radio_gerente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_gerente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_save)))
                 .addContainerGap())
         );
@@ -120,7 +132,8 @@ public class FuncionarioWin extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_save)
                     .addComponent(radio_vendedor)
-                    .addComponent(radio_gerente))
+                    .addComponent(radio_gerente)
+                    .addComponent(btn_gerente))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -166,9 +179,9 @@ public class FuncionarioWin extends javax.swing.JDialog {
             }
 
             if (this.save_opt == 1) {
-                ctr.update(this.id, this.nome, this.tipo);
+                ctr.update(this.id, this.nome, this.tipo, this.ger_selected);
             } else {
-                ctr.insert(this.nome, this.tipo);
+                ctr.insert(this.nome, this.tipo, this.ger_selected);
             }
             this.setVisible(false);
 
@@ -177,6 +190,22 @@ public class FuncionarioWin extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void btn_gerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerenteActionPerformed
+        
+        try {
+            FuncionarioListWin win = new FuncionarioListWin(null, true, true);
+            win.setLocationRelativeTo(null);
+            win.setVisible(true);
+
+            // Pega o gerente selecionado
+            this.ger_selected = win.getSelected();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro! " + ex);
+        }
+        
+    }//GEN-LAST:event_btn_gerenteActionPerformed
 
     public void setId(int id) {
         this.id = id;
@@ -228,6 +257,7 @@ public class FuncionarioWin extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_gerente;
     private javax.swing.JButton btn_produtos;
     private javax.swing.JButton btn_save;
     private javax.swing.JTextField input_id;

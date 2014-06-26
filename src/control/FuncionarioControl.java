@@ -44,11 +44,12 @@ public class FuncionarioControl extends DefaultControl {
      * @throws Exception
      * @throws SQLException
      */
-    public void insert(String nome, int type) throws Exception, SQLException {
+    public void insert(String nome, int type, int gerente) throws Exception, SQLException {
         
         this.obj = new Funcionario();
         this.obj.setNome(nome);
         this.obj.setTipo(type);
+        this.obj.setIdGerente(gerente);
         dao.insert(this.obj);
         
         JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -61,12 +62,13 @@ public class FuncionarioControl extends DefaultControl {
      * @param id
      * @param text
      */
-    public void update(int id, String nome, int type) throws Exception, SQLException {
+    public void update(int id, String nome, int type, int gerente) throws Exception, SQLException {
 
         this.obj = new Funcionario();
         this.obj.setId(id);
         this.obj.setNome(nome);
         this.obj.setTipo(type);
+        this.obj.setIdGerente(gerente);
         dao.update(this.obj);
 
         JOptionPane.showMessageDialog(null, "Alterações salvas!");
