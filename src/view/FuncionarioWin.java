@@ -10,37 +10,41 @@ import javax.swing.JOptionPane;
  * @author Luiz
  */
 public class FuncionarioWin extends javax.swing.JDialog {
-    
+
     FuncionarioControl ctr = FuncionarioControl.getInstance();
     int selected;
     int save_opt = 0;
+    int tipo;
 
     // Campos
     int id;
     String nome;
-    
+
     public FuncionarioWin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         // Valores padrão
         input_nome.setText("");
-        
+
         // Carrega o ID
-        input_id.setText( Integer.toString( ctr.getTheNextID() ) );
-        
+        input_id.setText(Integer.toString(ctr.getTheNextID()));
+
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        opt_tipo = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         input_nome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         input_id = new javax.swing.JTextField();
         btn_save = new javax.swing.JButton();
         btn_produtos = new javax.swing.JButton();
+        radio_vendedor = new javax.swing.JRadioButton();
+        radio_gerente = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Funcionário");
@@ -66,6 +70,13 @@ public class FuncionarioWin extends javax.swing.JDialog {
             }
         });
 
+        opt_tipo.add(radio_vendedor);
+        radio_vendedor.setSelected(true);
+        radio_vendedor.setText("Vendedor");
+
+        opt_tipo.add(radio_gerente);
+        radio_gerente.setText("Gerente");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -73,7 +84,7 @@ public class FuncionarioWin extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(input_nome, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -85,8 +96,11 @@ public class FuncionarioWin extends javax.swing.JDialog {
                             .addComponent(input_id, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_produtos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(radio_vendedor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_gerente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_save)))
                 .addContainerGap())
         );
@@ -103,7 +117,10 @@ public class FuncionarioWin extends javax.swing.JDialog {
                     .addComponent(input_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_produtos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_save)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_save)
+                    .addComponent(radio_vendedor)
+                    .addComponent(radio_gerente))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -111,7 +128,7 @@ public class FuncionarioWin extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_produtosActionPerformed
-        
+
         try {
             FuncionarioListWin win = new FuncionarioListWin(null, true, true);
             win.setLocationRelativeTo(null);
@@ -119,50 +136,58 @@ public class FuncionarioWin extends javax.swing.JDialog {
 
             // Pega o objeto selecionado
             this.selected = win.getSelected();
-            
-            if(this.selected > 0) {
+
+            if (this.selected > 0) {
                 // Altera a opção de salvar
                 btn_save.setText("Salvar");
                 this.save_opt = 1;
-            
+
                 // Carrega os dados
                 ctr.loadValuesByID(this, this.selected);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro! " + ex);
         }
-        
+
     }//GEN-LAST:event_btn_produtosActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-        
+
         try {
-            
+
             this.nome = input_nome.getText();
-            
-            if(this.save_opt == 1) {
-                ctr.update(this.id, this.nome);
+
+            // Radio Button
+            if (radio_vendedor.isSelected()) {
+                this.tipo = 1;
+            }
+            if (radio_gerente.isSelected()) {
+                this.tipo = 2;
+            }
+
+            if (this.save_opt == 1) {
+                ctr.update(this.id, this.nome, this.tipo);
             } else {
-                ctr.insert(this.nome);
+                ctr.insert(this.nome, this.tipo);
             }
             this.setVisible(false);
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro! " + ex);
         }
-        
+
     }//GEN-LAST:event_btn_saveActionPerformed
 
     public void setId(int id) {
         this.id = id;
-        input_id.setText( Integer.toString(id) );
+        input_id.setText(Integer.toString(id));
     }
-    
+
     public void setNome(String nome) {
         this.nome = nome;
-        input_nome.setText( nome );
+        input_nome.setText(nome);
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -209,5 +234,8 @@ public class FuncionarioWin extends javax.swing.JDialog {
     private javax.swing.JTextField input_nome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.ButtonGroup opt_tipo;
+    private javax.swing.JRadioButton radio_gerente;
+    private javax.swing.JRadioButton radio_vendedor;
     // End of variables declaration//GEN-END:variables
 }

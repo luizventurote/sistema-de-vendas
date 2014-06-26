@@ -44,10 +44,11 @@ public class FuncionarioControl extends DefaultControl {
      * @throws Exception
      * @throws SQLException
      */
-    public void insert(String nome) throws Exception, SQLException {
+    public void insert(String nome, int type) throws Exception, SQLException {
         
         this.obj = new Funcionario();
         this.obj.setNome(nome);
+        this.obj.setTipo(type);
         dao.insert(this.obj);
         
         JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -60,11 +61,12 @@ public class FuncionarioControl extends DefaultControl {
      * @param id
      * @param text
      */
-    public void update(int id, String nome) throws Exception, SQLException {
+    public void update(int id, String nome, int type) throws Exception, SQLException {
 
         this.obj = new Funcionario();
         this.obj.setId(id);
         this.obj.setNome(nome);
+        this.obj.setTipo(type);
         dao.update(this.obj);
 
         JOptionPane.showMessageDialog(null, "Alterações salvas!");
@@ -130,11 +132,20 @@ public class FuncionarioControl extends DefaultControl {
             while (it.hasNext()) {
 
                 obj = it.next();
+                
+                String tipo;
+                
+                if(obj.getTipo() == 1) {
+                    tipo = "Vendedor";
+                } else {
+                    tipo = "Gerente";
+                }
 
                 // New line
                 ((DefaultTableModel) table.getModel()).addRow(new Vector());
                 table.setValueAt(obj.getId(), linha, col++);
-                table.setValueAt(obj.getNome(), linha, col);
+                table.setValueAt(obj.getNome(), linha, col++);
+                table.setValueAt(tipo, linha, col);
 
                 // Reset number of columns
                 col = 0;

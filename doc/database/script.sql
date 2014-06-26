@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
   id INT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(70) NULL,
   tipo INT NULL,
+  id_gerente INT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 

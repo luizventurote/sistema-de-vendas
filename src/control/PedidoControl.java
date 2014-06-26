@@ -21,6 +21,8 @@ import model.Cliente;
 import model.Funcionario;
 import model.Pedido;
 import model.Produto;
+import model.chain.Gerente;
+import model.chain.Vendedor;
 import model.factory.AVista;
 import model.factory.AbstractFactoryPagamento;
 import model.factory.PagSeguro;
@@ -118,14 +120,14 @@ public class PedidoControl extends DefaultControl {
 
         // Funcionário
         FuncionarioDao fun_dao = new FuncionarioDao();
-        
+
         this.obj = new Pedido();
         this.obj.setCliente(cli_dao.get(cliente_id));
         this.obj.setFuncionario(fun_dao.get(funcionario_id));
         this.obj.setStatus(this.getStatus(status));
         this.obj.setData(this.formatarData(data_pedido));
         this.obj.setValor(this.updateTotalValue(table));
-        
+
         // Insere os produtos no pedido
 //        int qtd_row = table.getRowCount();
 //
@@ -145,7 +147,6 @@ public class PedidoControl extends DefaultControl {
 //        }
 //
 //        this.obj.setProdutos(produtos);
-        
         dao.update(this.obj);
 
         JOptionPane.showMessageDialog(null, "Alterações salvas!");
@@ -271,26 +272,27 @@ public class PedidoControl extends DefaultControl {
         this.loadTableProdutos(id, win.getTable());
 
     }
-    
+
     /**
      * Carrega os produtos da tabela a partir do id do pedido
+     *
      * @param table
-     * @param list 
+     * @param list
      */
     public void loadTableProdutos(int pedido_id, JTable table) throws Exception {
-        
+
         this.cleanTable(table);
-        
+
         // Pedido
         Pedido obj = this.get(pedido_id);
-        
+
         List<Produto> list = new ArrayList(obj.getProdutos());
 
         int size = list.size();
 
         int linha = table.getRowCount();
         int col = 0;
-        
+
         Produto produto;
 
         for (int i = 0; i < size; i++) {
@@ -308,9 +310,9 @@ public class PedidoControl extends DefaultControl {
             col = 0;
 
             linha++;
-            
+
         }
-        
+
     }
 
     /**
@@ -444,27 +446,55 @@ public class PedidoControl extends DefaultControl {
 
         return total;
     }
-    
+
     /**
      * Efetua o pagamento
      */
     public boolean efetuarPagamento(int forma) {
 
         AbstractFactoryPagamento fabrica;
-        
-        switch(forma) {
+
+        switch (forma) {
             case 1:
                 fabrica = new PagamentoPadrao();
                 Pagamento pagamento = fabrica.criarPagamento();
-                return pagamento.efetuarPagamento(); 
+                return pagamento.efetuarPagamento();
             case 2:
                 fabrica = new PagSeguro();
                 Pagamento pag = fabrica.criarPagamento();
-                return pag.efetuarPagamento(); 
+                return pag.efetuarPagamento();
         }
-        
+
         return false;
+
+    }
+
+    public boolean processarPagamento(int funcionario_id, String valor) throws Exception {
+
+        FuncionarioDao fun_dao = new FuncionarioDao();
+        Funcionario fun = fun_dao.get(funcionario_id);
         
+        if (fun.getTipo() == 1) {
+            
+            Vendedor ven = new Vendedor();
+            ven.setId(fun.getId());
+            ven.setNome(fun.getNome());            
+            
+            ven.processarSolicitacao(Float.parseFloat(valor));
+        }
+
+        if (fun.getTipo() == 2) {
+            
+            Gerente ger = new Gerente();
+            ger.setId(fun.getId());
+            ger.setNome(fun.getNome());            
+            
+            ger.processarSolicitacao(Float.parseFloat(valor));
+            
+        } 
+        
+        return true;
+
     }
 
 }

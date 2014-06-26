@@ -489,9 +489,18 @@ public class PedidoWin extends javax.swing.JDialog {
     private void btn_pagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagamentoActionPerformed
 
         if (Float.parseFloat(this.input_valor_total.getText()) > 0) {
-            PagamentoWin win = new PagamentoWin(null, true, input_valor_total.getText());
-            win.setLocationRelativeTo(null);
-            win.setVisible(true);
+
+            try {
+                if (ctr.processarPagamento(this.id_vendedor, input_valor_total.getText())) {
+                    PagamentoWin win = new PagamentoWin(null, true, input_valor_total.getText());
+                    win.setLocationRelativeTo(null);
+                    win.setVisible(true);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(PedidoWin.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro! " + ex);
+            }
+
         } else {
             JOptionPane.showMessageDialog(null, "O valor total está menor do que R$00,00");
         }
@@ -526,26 +535,25 @@ public class PedidoWin extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_valorActionPerformed
 
     private void btn_excluir_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluir_produtoActionPerformed
-        
+
         try {
-            
+
             // Remove a linha            
-            ((DefaultTableModel) table.getModel()).removeRow( this.row_selected );
+            ((DefaultTableModel) table.getModel()).removeRow(this.row_selected);
 
             //this.refreshTable();
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRO ao excluir. " + e.getMessage());
         }
-        
+
     }//GEN-LAST:event_btn_excluir_produtoActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-        
+
         btn_excluir_produto.setEnabled(true);
-        
+
         this.row_selected = table.getSelectedRow();
-        
+
     }//GEN-LAST:event_tableMouseClicked
 
     public void atualizarValor() {

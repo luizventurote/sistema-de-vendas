@@ -3,6 +3,8 @@ package dao;
 import java.sql.SQLException;
 import java.util.List;
 import model.Funcionario;
+import model.chain.Gerente;
+import model.chain.Vendedor;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
