@@ -59,8 +59,6 @@ public class ClienteControl extends DefaultControl {
         this.obj.setNumero( Integer.parseInt( num ) );
         this.obj.setComplemento(comp);
         dao.insert(this.obj);
-        
-        JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
     }
 

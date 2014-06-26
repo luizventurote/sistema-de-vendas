@@ -294,6 +294,7 @@ public class ClienteWin extends javax.swing.JDialog {
                 ctr.update(this.id, this.nome, this.email, this.nasc, this.tel, this.cel, this.end, this.bairro, this.cidade, this.uf, this.comp, this.num );
             } else {
                 ctr.insert(this.nome, this.email, this.nasc, this.tel, this.cel, this.end, this.bairro, this.cidade, this.uf, this.comp, this.num );
+                JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
             }
             this.setVisible(false);
             
