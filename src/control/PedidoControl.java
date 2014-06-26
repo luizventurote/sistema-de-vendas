@@ -71,7 +71,7 @@ public class PedidoControl extends DefaultControl {
         this.obj.setData(this.formatarData(data_pedido));
         this.obj.setValor(this.updateTotalValue(table));
 
-        // Insere os arquivos ao componente
+        // Insere os produtos no pedido
         int qtd_row = table.getRowCount();
 
         int id;
@@ -105,7 +105,42 @@ public class PedidoControl extends DefaultControl {
      */
     public void update(int id, int cliente_id, int funcionario_id, int status, String data_pedido, JTable table) throws Exception, SQLException {
 
+        // Produto
+        ProdutoDao prod_dao = new ProdutoDao();
+
+        // Cliente
+        ClienteDao cli_dao = new ClienteDao();
+
+        // Funcionário
+        FuncionarioDao fun_dao = new FuncionarioDao();
+        
         this.obj = new Pedido();
+        this.obj.setCliente(cli_dao.get(cliente_id));
+        this.obj.setFuncionario(fun_dao.get(funcionario_id));
+        this.obj.setStatus(this.getStatus(status));
+        this.obj.setData(this.formatarData(data_pedido));
+        this.obj.setValor(this.updateTotalValue(table));
+        
+        // Insere os produtos no pedido
+//        int qtd_row = table.getRowCount();
+//
+//        int id_produto;
+//
+//        Set<Produto> produtos = new HashSet(0);
+//
+//        Produto file;
+//
+//        for (int i = 0; i < qtd_row; i++) {
+//
+//            // Recupera um objeto pelo ID e adicona na lista 
+//            id_produto = Integer.parseInt(table.getValueAt(i, 0).toString());
+//            file = prod_dao.get(id_produto);
+//            produtos.add(file);
+//
+//        }
+//
+//        this.obj.setProdutos(produtos);
+        
         dao.update(this.obj);
 
         JOptionPane.showMessageDialog(null, "Alterações salvas!");
