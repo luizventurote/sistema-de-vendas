@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 25, 2014 6:32:55 PM by Hibernate Tools 3.6.0
+// Generated Jun 26, 2014 1:13:14 AM by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -13,13 +13,15 @@ public class Funcionario  implements java.io.Serializable {
 
      private Integer id;
      private String nome;
+     private Integer tipo;
      private Set pedidos = new HashSet(0);
 
     public Funcionario() {
     }
 
-    public Funcionario(String nome, Set pedidos) {
+    public Funcionario(String nome, Integer tipo, Set pedidos) {
        this.nome = nome;
+       this.tipo = tipo;
        this.pedidos = pedidos;
     }
    
@@ -36,6 +38,13 @@ public class Funcionario  implements java.io.Serializable {
     
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    public Integer getTipo() {
+        return this.tipo;
+    }
+    
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
     public Set getPedidos() {
         return this.pedidos;
