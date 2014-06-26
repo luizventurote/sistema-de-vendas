@@ -100,7 +100,6 @@ public class PedidoWin extends javax.swing.JDialog {
         });
 
         btn_pagamento.setText("Efetuar Pagamento");
-        btn_pagamento.setEnabled(false);
         btn_pagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_pagamentoActionPerformed(evt);
@@ -366,7 +365,7 @@ public class PedidoWin extends javax.swing.JDialog {
 
                 // Carrega os dados
                 ctr.loadValuesByID(this, this.selected);
-                
+
                 this.atualizarValor();
             }
         } catch (Exception ex) {
@@ -467,7 +466,16 @@ public class PedidoWin extends javax.swing.JDialog {
     }//GEN-LAST:event_radio_cancelActionPerformed
 
     private void btn_pagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagamentoActionPerformed
-        // TODO add your handling code here:
+
+        if (Float.parseFloat(this.input_valor_total.getText()) > 0) {
+            PagamentoWin win = new PagamentoWin(null, true, input_valor_total.getText());
+            win.setLocationRelativeTo(null);
+            win.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "O valor total está menor do que R$00,00");
+        }
+
+
     }//GEN-LAST:event_btn_pagamentoActionPerformed
 
     private void btn_produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_produtosActionPerformed

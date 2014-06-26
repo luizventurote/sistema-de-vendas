@@ -21,6 +21,11 @@ import model.Cliente;
 import model.Funcionario;
 import model.Pedido;
 import model.Produto;
+import model.factory.AVista;
+import model.factory.AbstractFactoryPagamento;
+import model.factory.PagSeguro;
+import model.factory.Pagamento;
+import model.factory.PagamentoPadrao;
 import view.PedidoWin;
 
 /**
@@ -438,6 +443,28 @@ public class PedidoControl extends DefaultControl {
         }
 
         return total;
+    }
+    
+    /**
+     * Efetua o pagamento
+     */
+    public boolean efetuarPagamento(int forma) {
+
+        AbstractFactoryPagamento fabrica;
+        
+        switch(forma) {
+            case 1:
+                fabrica = new PagamentoPadrao();
+                Pagamento pagamento = fabrica.criarPagamento();
+                return pagamento.efetuarPagamento(); 
+            case 2:
+                fabrica = new PagSeguro();
+                Pagamento pag = fabrica.criarPagamento();
+                return pag.efetuarPagamento(); 
+        }
+        
+        return false;
+        
     }
 
 }
